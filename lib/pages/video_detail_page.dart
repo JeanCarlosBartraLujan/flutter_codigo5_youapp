@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_youapp/models/channel_model.dart';
 import 'package:flutter_codigo5_youapp/models/video_model.dart';
 import 'package:flutter_codigo5_youapp/pages/channel_page.dart';
 import 'package:flutter_codigo5_youapp/services/api_service.dart';
@@ -9,13 +10,17 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoDetailPage extends StatefulWidget {
   String videoId;
-  VideoDetailPage({required this.videoId});
+
+  VideoDetailPage({
+    required this.videoId,
+  });
   @override
   State<VideoDetailPage> createState() => _VideoDetailPageState();
 }
 
 class _VideoDetailPageState extends State<VideoDetailPage> {
   List<VideoModel> videos = [];
+  ChannelModel? channel;
 
   final APIService _apiService = APIService();
   bool isLoading = true;
@@ -26,6 +31,8 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getDataDetail();
+
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,
       flags: const YoutubePlayerFlags(
@@ -34,6 +41,14 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
         hideControls: false,
       ),
     );
+  }
+
+  getDataDetail() {
+    _apiService.getVideos().then((value) {
+      videos = value;
+      isLoading = false;
+      setState(() {});
+    });
   }
 
   @override
@@ -159,6 +174,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                           CircleAvatar(
                             backgroundColor: Colors.black12,
                             backgroundImage: NetworkImage(
+                              ///channel.snippet.thumbnails.thumbnailsDefault.url,
                               "https://images.pexels.com/photos/11482693/pexels-photo-11482693.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
                             ),
                           ),
@@ -247,7 +263,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Lorem ipsum dolor sit amet Lorem ipsum dolor sitorem ipsum dolor sit ametLorem ipsum dolor sit amet Lorem ipsum dolor sitorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sitorem ipsum dolor sit amet",
+                                "Excelente video!!! Gracias por tanta info!!! estoy desarrollando proyectos de electrónica, y quiero aprender un poco más de programación... y tu canal es una referencia inmensa!!! Lo único que tengo que quitarle un poco de bajos a mis parlantes ya que a tus videos les sobra jajajaja Gran abrazo desde Argentina, y Feliz Año 2022!!!",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

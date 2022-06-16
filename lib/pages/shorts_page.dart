@@ -13,7 +13,7 @@ class ShortPage extends StatelessWidget {
       backgroundColor: kBrandPrimaryColor,
       body: Image(
         image: NetworkImage(
-            "https://images.pexels.com/photos/11780519/pexels-photo-11780519.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+            "https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
 
         //  Container(
         //   height: 800.0,
